@@ -28,21 +28,21 @@ class Favorites_Characters(Base):
     __tablename__="favorites_characters"
     id = Column(Integer, primary_key=True)
     id_user=Column(Integer,ForeignKey('user.id'),nullable=False)
-    characters=relationship('Characters', backref='favorites_characters', lazy=True)
+    favorites_characters=Column(Integer,ForeignKey('characters.id'),nullable=False)
 
 class Favorites_Planets(Base):
     # id:Column(Integer, primary_key=True)
     __tablename__="favorites_planets"
     id = Column(Integer, primary_key=True)
     id_user=Column(Integer,ForeignKey('user.id'),nullable=False)
-    planets=relationship('Planet', backref='favorites_planets', lazy=True)
+    favorites_planets=Column(Integer,ForeignKey('planets.id'),nullable=False)
 
 class Favorites_Vehicles(Base):
     # id:Column(Integer, primary_key=True)
     __tablename__="favorites_vehicles"
     id = Column(Integer, primary_key=True)
     id_user=Column(Integer,ForeignKey('user.id'),nullable=False)
-    vehicles=relationship('Vehicles', backref='favorites_vehicles', lazy=True)
+    favorites_vehicles=Column(Integer,ForeignKey('vehicles.id'),nullable=False)
 
 
     def to_dict(self):
@@ -64,7 +64,7 @@ class Characters(Base):
     skin_color=Column(String(250), nullable=False)
     starships=Column(String(250), nullable=False)
     vehicles=Column(String(250), nullable=False)
-    id_favorites_characters=Column(Integer,ForeignKey('favorites_characters.id'),nullable=False)
+    characters_fav=relationship('Favorites_Characters', backref='characters', lazy=True)
 
     def to_dict(self):
         return {}
@@ -79,7 +79,7 @@ class Planet(Base):
     population=Column(Integer, nullable=False)
     rotation_period=Column(Integer, nullable=False)
     terrain=Column(String(250), nullable=False)
-    id_favorites_planets=Column(Integer,ForeignKey('favorites_planets.id'),nullable=False)
+    planets_fav=relationship('Favorites_Planets', backref='planets', lazy=True)
     
     def to_dict(self):
         return {}
@@ -94,7 +94,7 @@ class Vehicles(Base):
     model=Column(String(250), nullable=False)
     name=Column(String(250), nullable=False)
     passengers=Column(Integer, nullable=False)
-    id_favorites_vehicles=Column(Integer,ForeignKey('favorites_vehicles.id'),nullable=False)
+    vehicles_fav=relationship('Favorites_Vehicles', backref='vehicles', lazy=True)
 
     def to_dict(self):
         return {}
